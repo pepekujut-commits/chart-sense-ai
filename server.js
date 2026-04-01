@@ -106,7 +106,12 @@ app.get('/api/models', async (req, res) => {
   }
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 ChartSense Backend running at http://0.0.0.0:${PORT}`);
-  console.log(`🔑 API Key configured: ${process.env.GEMINI_API_KEY ? 'YES ✅' : 'NO ❌'}`);
-});
+// Use conditional listen for local vs production
+if (require.main === module) {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 ChartSense Backend running at http://0.0.0.0:${PORT}`);
+    console.log(`🔑 API Key configured: ${process.env.GEMINI_API_KEY ? 'YES ✅' : 'NO ❌'}`);
+  });
+}
+
+module.exports = app;
